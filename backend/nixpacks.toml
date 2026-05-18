@@ -1,2 +1,0 @@
-[start]
-cmd = "nginx -c /app/backend/nginx.conf -g 'daemon off;' & php-fpm"
