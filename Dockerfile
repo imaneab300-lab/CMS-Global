@@ -20,16 +20,19 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/http.d/default.conf
 
-# Setup working directory
+# Setup working directory to absolute root first
 WORKDIR /app
 COPY . /app
 
-# Install Composer natively
+# Install Composer packages straight inside backend
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN cd /app/backend && composer install --no-dev --optimize-autoloader
 
-# Set permissions for Laravel storage
+# Set explicit folder access rules for Laravel
 RUN chown -R www-data:www-data /app/backend/storage /app/backend/bootstrap/cache
+
+# Shift core execution workspace directly to backend folder for Railway commands
+WORKDIR /app/backend
 
 EXPOSE 80
 
