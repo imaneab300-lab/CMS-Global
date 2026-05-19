@@ -16,11 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
 
-        // Force JSON for all API requests
         $middleware->append(\App\Http\Middleware\ForceJsonResponse::class);
-
-        // 🚀 ADDED THIS LINE TO ALLOW NETLIFY AND PHONES TO FETCH DATA
-        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
